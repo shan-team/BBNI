@@ -95,7 +95,13 @@ A list containing the full trajectory of the MCMC chain. Specifically,
 iteration). These represent samples drawn from the marginal posterior
 distribution \\P(T,F\|G)\\ used for Bayesian model averaging.
 Additionally, the `post_edge_prob` (matrix of marginal posterior edge
-probabilities) and `burn_in` ratio are returned in the list.
+probabilities) and `burn_in` ratio are returned in the list. The result
+is a classed `bbni` object, so
+[`print()`](https://rdrr.io/r/base/print.html),
+[`summary()`](https://rdrr.io/r/base/summary.html), and
+[`plot()`](https://rdrr.io/r/graphics/plot.default.html) methods are
+available (see
+[`?bbni_class`](https://shan-team.github.io/BBNI/reference/bbni_class.md)).
 
 ## Details
 

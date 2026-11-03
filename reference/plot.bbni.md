@@ -2,9 +2,9 @@
 
 Produces a trace plot of the log-posterior over MCMC iterations. This
 method delegates to
-[`plot_trace()`](https://han16.github.io/BBNI/reference/plot_trace.md).
+[`plot_trace()`](https://shan-team.github.io/BBNI/reference/plot_trace.md).
 For network visualization, use
-[`plot_bbni()`](https://han16.github.io/BBNI/reference/plot_bbni.md).
+[`plot_bbni()`](https://shan-team.github.io/BBNI/reference/plot_bbni.md).
 
 ## Usage
 
@@ -18,12 +18,12 @@ plot(x, ...)
 - x:
 
   A `bbni` object returned by
-  [`run_bbni()`](https://han16.github.io/BBNI/reference/run_bbni.md).
+  [`run_bbni()`](https://shan-team.github.io/BBNI/reference/run_bbni.md).
 
 - ...:
 
   Extra arguments passed to
-  [`plot_trace()`](https://han16.github.io/BBNI/reference/plot_trace.md).
+  [`plot_trace()`](https://shan-team.github.io/BBNI/reference/plot_trace.md).
 
 ## Value
 

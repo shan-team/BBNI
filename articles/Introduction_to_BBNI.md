@@ -127,8 +127,8 @@ be recorded as binary (0/1) expression states.
 ## Running the MCMC sampler
 
 We next execute
-[`run_bbni()`](https://han16.github.io/BBNI/reference/run_bbni.md) on
-the simulated data. The main arguments are:
+[`run_bbni()`](https://shan-team.github.io/BBNI/reference/run_bbni.md)
+on the simulated data. The main arguments are:
 
 - `num_update` - total number of MCMC outer iterations.
 - `penalty` - structural-prior hyperparameter in \\(0, 1\]\\. Values
@@ -171,7 +171,7 @@ mcmc_results <- run_bbni(
 run_end <- Sys.time()
 ```
 
-[`run_bbni()`](https://han16.github.io/BBNI/reference/run_bbni.md)
+[`run_bbni()`](https://shan-team.github.io/BBNI/reference/run_bbni.md)
 accepts a `verbose` argument (default `FALSE`) that displays a text
 progress bar during sampling; it’s left default here to keep the
 vignette clean.
@@ -193,7 +193,7 @@ hardware and system load.
 
 ## Analyzing the output
 
-[`run_bbni()`](https://han16.github.io/BBNI/reference/run_bbni.md)
+[`run_bbni()`](https://shan-team.github.io/BBNI/reference/run_bbni.md)
 returns a list containing the sampled path of the Markov chain:
 
 - `log_posterior` - numeric vector of log-posterior values stored after
@@ -204,6 +204,49 @@ returns a list containing the sampled path of the Markov chain:
   calculated after discarding burn_in period
 - `burn_in`- the `burn_in` ratio returned back to user for posterior
   reference
+
+As of v0.2.3, the result is returned as a classed `bbni` object, so the
+familiar generic functions
+[`print()`](https://rdrr.io/r/base/print.html),
+[`summary()`](https://rdrr.io/r/base/summary.html), and
+[`plot()`](https://rdrr.io/r/graphics/plot.default.html) work on it
+directly. The default print method gives a compact overview of the
+completed run:
+
+``` r
+
+mcmc_results
+#> <bbni> Bayesian Boolean Network Inference MCMC output
+#> 20 nodes | 5000 outer iterations | time-series data
+#> Use summary() for posterior edge statistics and plot() for the trace plot.
+```
+
+[`summary()`](https://rdrr.io/r/base/summary.html) prints posterior edge
+statistics and invisibly returns them as a list, including the number of
+strong edges (`n_strong_edges`) and the highest-posterior edges as a
+data frame (`top_edges`) for downstream use:
+
+``` r
+
+summary(mcmc_results, threshold = 0.5, n_top = 5)
+#> BBNI MCMC summary
+#>   Nodes:                 20
+#>   Outer iterations:      5000
+#>   Burn-in ratio:         0.75
+#>   Final log-posterior:   -1221.789
+#>   Edges with P > 0.50:    29
+#>   Highest-posterior edges (child <- parent):
+#>     N13 <- N1 (P = 1.00)
+#>     N14 <- N1 (P = 1.00)
+#>     N6 <- N2 (P = 1.00)
+#>     N17 <- N5 (P = 1.00)
+#>     N10 <- N6 (P = 1.00)
+```
+
+The [`plot()`](https://rdrr.io/r/graphics/plot.default.html) method
+draws the log-posterior trace plot by delegating to
+[`plot_trace()`](https://shan-team.github.io/BBNI/reference/plot_trace.md);
+it is used in the next section.
 
 ### Convergence: trace plot
 
@@ -226,8 +269,8 @@ true_logpost_raw <- BBNI:::Error_LLH(
 # The log-posterior value is the last element of the first returned vector.
 true_logpost <- true_logpost_raw[[1]][length(true_logpost_raw[[1]])]
 
-# Draw base trace plot with package function
-plot_trace(mcmc_results)
+# Draw base trace plot with the S3 plot() method (delegates to plot_trace())
+plot(mcmc_results)
 
 # Add true-network reference value.
 abline(h = true_logpost, col = "firebrick", lty = 2, lwd = 2)
@@ -310,8 +353,8 @@ We first discard an initial burn-in period, here set to 75% of the
 recorded chain to match the burn-in convention used in [Han et
 al. (2014)](https://doi.org/10.1371/journal.pone.0115806)’s own
 simulation studies, instead of
-[`run_bbni()`](https://han16.github.io/BBNI/reference/run_bbni.md)’s own
-default `burn_in` value of 70%. This is to reduce the impact of the
+[`run_bbni()`](https://shan-team.github.io/BBNI/reference/run_bbni.md)’s
+own default `burn_in` value of 70%. This is to reduce the impact of the
 unpredictability of the arbitrary starting structure. We then retain one
 network per outer iteration (every `num.node` node-level updates) to
 account for the strong statistical dependence of within-iteration
@@ -370,7 +413,7 @@ Bayesian Boolean network framework to yeast cell-cycle expression data
 and compared the inferred relationships with a reference cell-cycle
 network. A package-level empirical example can follow the same
 structure: load a binary expression matrix, run
-[`run_bbni()`](https://han16.github.io/BBNI/reference/run_bbni.md),
+[`run_bbni()`](https://shan-team.github.io/BBNI/reference/run_bbni.md),
 examine trace behavior, summarize posterior edge probabilities, and
 interpret high-probability interactions in relation to existing
 biological knowledge.
@@ -416,7 +459,7 @@ cat(
   nrow(yeast_data) * 10000, "node updates) in",
   round(as.numeric(difftime(run_end, run_start, units = "mins")), 2), "minutes\n"
 )
-#> Sampler completed 10000 iterations ( 140000 node updates) in 2.04 minutes
+#> Sampler completed 10000 iterations ( 140000 node updates) in 2.36 minutes
 ```
 
 The results of the MCMC chain are visualized with the following trace
@@ -463,11 +506,14 @@ authors reported.
 This vignette demonstrates the core `BBNI` workflow on simulated data.
 From here:
 
-- See [`?run_bbni`](https://han16.github.io/BBNI/reference/run_bbni.md),
-  [`?GenerateNetwork`](https://han16.github.io/BBNI/reference/GenerateNetwork.md),
+- See
+  [`?run_bbni`](https://shan-team.github.io/BBNI/reference/run_bbni.md),
+  [`?GenerateNetwork`](https://shan-team.github.io/BBNI/reference/GenerateNetwork.md),
   and
-  [`?GenerateSample`](https://han16.github.io/BBNI/reference/GenerateSample.md)
-  for function-level documentation.
+  [`?GenerateSample`](https://shan-team.github.io/BBNI/reference/GenerateSample.md)
+  for function-level documentation, and
+  [`?bbni_class`](https://shan-team.github.io/BBNI/reference/bbni_class.md)
+  for the S3 methods available on the result object.
 - The simulated example runs 5000 iterations on a 20-node network.
   Larger networks, noisier data, or higher-precision posterior summaries
   may require significantly more iterations.
@@ -484,13 +530,14 @@ From here:
 sessionInfo()
 #> R version 4.6.0 (2026-04-24 ucrt)
 #> Platform: x86_64-w64-mingw32/x64
-#> Running under: Windows 11 x64 (build 28020)
+#> Running under: Windows 11 x64 (build 29639)
 #> 
 #> Matrix products: default
 #>   LAPACK version 3.12.1
 #> 
 #> locale:
-#> [1] LC_COLLATE=Spanish_Latin America.utf8  LC_CTYPE=Spanish_Latin America.utf8    LC_MONETARY=Spanish_Latin America.utf8 LC_NUMERIC=C                           LC_TIME=Spanish_Latin America.utf8    
+#> [1] LC_COLLATE=Spanish_Latin America.utf8  LC_CTYPE=Spanish_Latin America.utf8    LC_MONETARY=Spanish_Latin America.utf8
+#> [4] LC_NUMERIC=C                           LC_TIME=Spanish_Latin America.utf8    
 #> 
 #> time zone: America/Chicago
 #> tzcode source: internal
@@ -499,9 +546,14 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] BBNI_0.2.2
+#> [1] BBNI_0.2.3
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] igraph_2.3.3    R6_2.6.1        xfun_0.60       magrittr_2.0.5  knitr_1.51      pkgconfig_2.0.3 lifecycle_1.0.5 ps_1.9.3        cli_3.6.6       processx_3.9.0  pak_0.10.0      callr_3.7.6    
-#> [13] compiler_4.6.0  tools_4.6.0     evaluate_1.0.5  otel_0.2.0      rlang_1.3.0
+#>  [1] compiler_4.6.0    brio_1.1.5        xml2_1.6.0        rdtools_0.1.0     callr_3.7.6       yaml_2.3.12       fastmap_1.2.0    
+#>  [8] R6_2.6.1          commonmark_2.0.0  pak_0.11.1        igraph_2.3.4      knitr_1.52        tibble_3.3.1      desc_1.4.3       
+#> [15] rprojroot_2.1.1   pillar_1.11.1     rlang_1.3.0       testthat_3.3.2    cachem_1.1.0      roxygen2_8.1.1    xfun_0.62        
+#> [22] fs_2.1.0          pkgload_1.5.3     otel_0.2.0        memoise_2.0.1     cli_3.6.6         withr_3.0.3       magrittr_2.0.5   
+#> [29] ps_1.9.3          digest_0.6.39     processx_3.9.0    rstudioapi_0.19.0 devtools_2.5.2    lifecycle_1.0.5   vctrs_0.7.3      
+#> [36] evaluate_1.0.5    glue_1.8.1        sessioninfo_1.2.4 pkgbuild_1.4.8    rmarkdown_2.32    purrr_1.2.2       tools_4.6.0      
+#> [43] usethis_3.2.2     pkgconfig_2.0.3   ellipsis_0.3.3    htmltools_0.5.9
 ```

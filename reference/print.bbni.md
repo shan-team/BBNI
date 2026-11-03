@@ -18,7 +18,7 @@ print(x, ...)
 - x:
 
   A `bbni` object returned by
-  [`run_bbni()`](https://han16.github.io/BBNI/reference/run_bbni.md).
+  [`run_bbni()`](https://shan-team.github.io/BBNI/reference/run_bbni.md).
 
 - ...:
 
