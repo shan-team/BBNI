@@ -13,14 +13,16 @@ Description: Implements a fully Bayesian Markov chain Monte Carlo (MCMC) approac
 Depends: 
     R (>= 4.1.0)
 License: BSD_3_clause + file LICENSE
-URL: https://anson-li8.github.io/BBNI/, https://github.com/anson-li8/BBNI
-BugReports: https://github.com/anson-li8/BBNI/issues
+URL: https://han16.github.io/BBNI/, https://github.com/han16/BBNI
+BugReports: https://github.com/han16/BBNI/issues
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
 Imports: 
     stats,
-    igraph
+    igraph,
+    graphics,
+    utils
 Suggests: 
     knitr,
     rmarkdown,
