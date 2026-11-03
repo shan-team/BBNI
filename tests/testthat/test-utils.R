@@ -47,3 +47,23 @@ test_that("GenerateNetwork produces valid DAGs with a maximum in-degree of 2", {
     expect_true(all(in_degrees <= 2), info = paste("Network of size", n, "has a node with in-degree > 2"))
   }
 })
+
+test_that("GenerateNetwork retries on cyclic proposals", {
+  assign("bbni_retried", FALSE, envir = .GlobalEnv)
+  on.exit({
+    untrace("check_ances_matrix", where = asNamespace("BBNI"))
+    rm("bbni_retried", envir = .GlobalEnv)
+  }, add = TRUE)
+  trace("check_ances_matrix",
+        exit = quote(
+          if (returnValue() > 0)
+            assign("bbni_retried", TRUE, envir = .GlobalEnv)
+        ),
+        where = asNamespace("BBNI"), print = FALSE)
+  for (s in 1:50) {
+    set.seed(s)
+    GenerateNetwork(3)
+    if (get("bbni_retried", envir = .GlobalEnv)) break
+  }
+  expect_true(get("bbni_retried", envir = .GlobalEnv))
+})

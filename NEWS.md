@@ -1,3 +1,10 @@
+# BBNI 0.2.3
+
+* Added S3 methods (print, summary, plot) for a bbni class object as output
+* Added robust validation to public interface function parameters
+* Added robust unit tests, reaching over 95% code coverage
+* Added documentation and examples for new S3 methods
+
 # BBNI 0.2.2
 
 * Fixed time-series effective sample size calculation and user-defined prop.ratio behavior

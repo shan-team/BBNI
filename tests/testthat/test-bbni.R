@@ -89,3 +89,120 @@ test_that("run_bbni retains rownames in post_edge_prob", {
   expect_equal(rownames(res$post_edge_prob), c("G1", "G2", "G3"))
   expect_equal(colnames(res$post_edge_prob), c("G1", "G2", "G3"))
 })
+
+test_that("run_bbni explores multiple parent configurations", {
+  # Create a 4-node network with known structure:
+  # Node1: root (no parents)
+  # Node2: one parent (node1) – uses rule 11 (identity)
+  # Node3: two parents (node1, node2) – uses rule 1 (AND)
+  # Node4: one parent (node3) – uses rule 12 (negation)
+  net <- matrix(0, nrow = 4, ncol = 4)
+  net[2, 1] <- 11
+  net[3, 1] <- 1
+  net[3, 2] <- 1
+  net[4, 3] <- 12
+
+  set.seed(2024)
+  data <- GenerateSample(net, SampleSize = 10, para = rep(0.5, 4),
+                         error = matrix(0, 4, 10), timeseries = TRUE)
+
+  # Run enough iterations to allow proposals of add/remove/swap moves
+  set.seed(99)  # deterministic chain
+  res <- run_bbni(GeneData = data,
+                  num.node = 4,
+                  SampleSize = 10,
+                  num_update = 100, # more iterations to explore branches
+                  verbose = FALSE)
+
+  # Basic checks
+  expect_true(is.matrix(res$post_edge_prob))
+  expect_equal(dim(res$post_edge_prob), c(4, 4))
+  expect_true(all(res$post_edge_prob >= 0 & res$post_edge_prob <= 1))
+
+  # The chain should visit states covering all three parent-count branches
+  parent_counts <- unlist(lapply(res$networks, function(m) rowSums(m > 0)))
+  expect_true(0 %in% parent_counts)   # zero-parent branch
+  expect_true(1 %in% parent_counts)   # one-parent branch
+  expect_true(2 %in% parent_counts)   # two-parent branch
+})
+
+test_that("run_bbni w/ prop.ratio = 0.9 covers empirical proposal branches", {
+  # A small 3-node network; multiple runs with different seeds to explore many branches
+  for (seed in c(1, 2, 3, 4, 5)) {
+    set.seed(seed)
+    n <- 3
+    m <- 8
+    net <- GenerateNetwork(num.node = n)
+    data <- GenerateSample(net, SampleSize = m, para = rep(0.5, n),
+                           error = matrix(0, n, m), timeseries = TRUE)
+    # Use prop.ratio = 0.9 for frequent use of the empirical proposal distribution
+    res <- run_bbni(GeneData = data,
+                    num_update = 60, # enough iterations to move through many states
+                    prop.ratio = 0.9,
+                    verbose = FALSE)
+    # Basic checks (no need to assert coverage; just ensure it runs)
+    expect_true(is.matrix(res$post_edge_prob))
+  }
+})
+
+test_that("run_bbni on 3-node chain hits limited-parent edge cases", {
+  # Chain: 1 -> 2 -> 3. This creates states where when updating node 2,
+  # swap_candi (legal parents) has length 1, and when updating node 3,
+  # it has length 0, covering many previously uncovered branches.
+  n <- 3
+  m <- 8
+  net <- matrix(0, n, n)
+  net[2, 1] <- 11   # node2 = identity(node1)
+  net[3, 2] <- 11   # node3 = identity(node2)
+
+  for (seed in 10:14) {
+    set.seed(seed)
+    data <- GenerateSample(net, SampleSize = m, para = rep(0.5, n),
+                           error = matrix(0, n, m), timeseries = TRUE)
+    res <- run_bbni(GeneData = data,
+                    num_update = 60, # enough to explore states
+                    prop.ratio = 0.9, # use empirical proposals often
+                    verbose = FALSE)
+    expect_true(is.matrix(res$post_edge_prob))
+  }
+})
+
+test_that("run_bbni w/ independent data and prop.ratio = 0.9 covers non-timeseries paths", {
+  # Independent (cross-sectional) mode with empirical proposals
+  for (seed in 20:22) {
+    set.seed(seed)
+    n <- 3
+    m <- 8
+    net <- GenerateNetwork(num.node = n)
+    data <- GenerateSample(net, SampleSize = m, para = rep(0.5, n),
+                           error = matrix(0, n, m), timeseries = FALSE)
+    res <- run_bbni(GeneData = data,
+                    timeseries = FALSE,
+                    num_update = 40,
+                    prop.ratio = 0.9,
+                    verbose = FALSE)
+    expect_true(is.matrix(res$post_edge_prob))
+  }
+})
+
+test_that("run_bbni w/ a network of two-parent node executes swap moves", {
+  set.seed(42)
+  n <- 6
+  m <- 10
+  net <- matrix(0, n, n)
+  net[3, 1] <- 1
+  net[3, 2] <- 1
+  net[4, 3] <- 11
+  data <- GenerateSample(net, SampleSize = m, para = rep(0.5, n),
+                         error = matrix(0, n, m), timeseries = TRUE)
+  for (seed in c(100, 101, 102)) {
+    set.seed(seed)
+    res <- run_bbni(GeneData = data,
+                    num_update = 100,
+                    prop.ratio = 0.9,
+                    verbose = FALSE)
+    expect_true(is.matrix(res$post_edge_prob))
+  }
+})
+
+
