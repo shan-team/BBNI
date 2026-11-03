@@ -111,7 +111,7 @@ test_that("run_bbni explores multiple parent configurations", {
   res <- run_bbni(GeneData = data,
                   num.node = 4,
                   SampleSize = 10,
-                  num_update = 20, # more iterations to explore branches
+                  num_update = 100, # more iterations to explore branches
                   verbose = FALSE)
 
   # Basic checks
@@ -119,12 +119,11 @@ test_that("run_bbni explores multiple parent configurations", {
   expect_equal(dim(res$post_edge_prob), c(4, 4))
   expect_true(all(res$post_edge_prob >= 0 & res$post_edge_prob <= 1))
 
-  # The chain should have visited at least some states with 1 and 2 parents
-  # (can check by looking at the number of edges in sampled networks)
-  edge_counts <- sapply(res$networks, function(m) sum(m > 0))
-  expect_true(any(edge_counts == 1))
-  expect_true(any(edge_counts == 2))
-  expect_true(any(edge_counts == 3))
+  # The chain should visit states covering all three parent-count branches
+  parent_counts <- unlist(lapply(res$networks, function(m) rowSums(m > 0)))
+  expect_true(0 %in% parent_counts)   # zero-parent branch
+  expect_true(1 %in% parent_counts)   # one-parent branch
+  expect_true(2 %in% parent_counts)   # two-parent branch
 })
 
 test_that("run_bbni w/ prop.ratio = 0.9 covers empirical proposal branches", {
@@ -138,7 +137,7 @@ test_that("run_bbni w/ prop.ratio = 0.9 covers empirical proposal branches", {
                            error = matrix(0, n, m), timeseries = TRUE)
     # Use prop.ratio = 0.9 for frequent use of the empirical proposal distribution
     res <- run_bbni(GeneData = data,
-                    num_update = 15, # enough iterations to move through many states
+                    num_update = 60, # enough iterations to move through many states
                     prop.ratio = 0.9,
                     verbose = FALSE)
     # Basic checks (no need to assert coverage; just ensure it runs)
@@ -161,7 +160,7 @@ test_that("run_bbni on 3-node chain hits limited-parent edge cases", {
     data <- GenerateSample(net, SampleSize = m, para = rep(0.5, n),
                            error = matrix(0, n, m), timeseries = TRUE)
     res <- run_bbni(GeneData = data,
-                    num_update = 15, # enough to explore states
+                    num_update = 60, # enough to explore states
                     prop.ratio = 0.9, # use empirical proposals often
                     verbose = FALSE)
     expect_true(is.matrix(res$post_edge_prob))
@@ -179,7 +178,7 @@ test_that("run_bbni w/ independent data and prop.ratio = 0.9 covers non-timeseri
                            error = matrix(0, n, m), timeseries = FALSE)
     res <- run_bbni(GeneData = data,
                     timeseries = FALSE,
-                    num_update = 12,
+                    num_update = 40,
                     prop.ratio = 0.9,
                     verbose = FALSE)
     expect_true(is.matrix(res$post_edge_prob))
@@ -187,22 +186,19 @@ test_that("run_bbni w/ independent data and prop.ratio = 0.9 covers non-timeseri
 })
 
 test_that("run_bbni w/ a network of two-parent node executes swap moves", {
-  # Force initial state with a node having two parents, covering many two-parent case branches
   set.seed(42)
-  n <- 4
+  n <- 6
   m <- 10
-  # Create a network: node1 root, node2 root, node3 = node1 AND node2, node4 = node3
   net <- matrix(0, n, n)
   net[3, 1] <- 1
   net[3, 2] <- 1
   net[4, 3] <- 11
   data <- GenerateSample(net, SampleSize = m, para = rep(0.5, n),
                          error = matrix(0, n, m), timeseries = TRUE)
-  # Run with high proposal usage and multiple seeds to cover various swap/remove branches
   for (seed in c(100, 101, 102)) {
     set.seed(seed)
     res <- run_bbni(GeneData = data,
-                    num_update = 15,
+                    num_update = 100,
                     prop.ratio = 0.9,
                     verbose = FALSE)
     expect_true(is.matrix(res$post_edge_prob))

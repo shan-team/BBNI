@@ -54,9 +54,19 @@ plot_bbni <- function(results, threshold = 0.5, node_names = NULL, true_network 
   }
   # Filter probability matrix based on threshold
   adj_matrix <- ifelse(res >= threshold, 1, 0)
-  # Assign node names if provided, otherwise default to N1, N2...
   num_nodes <- nrow(res)
-    if (is.null(node_names)) {
+
+  # Validate node_names and true_network BEFORE reaching dimnames
+  if (!is.null(node_names) && (!is.character(node_names) || length(node_names) != num_nodes)) {
+    stop(sprintf("'node_names' must be a character vector of length %d.", num_nodes), call. = FALSE)
+  }
+  if (!is.null(true_network) && (!is.matrix(true_network) ||
+                                 nrow(true_network) != num_nodes || ncol(true_network) != num_nodes)) {
+    stop(sprintf("'true_network' must be a square %d x %d matrix.", num_nodes, num_nodes), call. = FALSE)
+  }
+
+  # Assign node names if provided, otherwise default to N1, N2...
+  if (is.null(node_names)) {
     colnames(adj_matrix) <- rownames(adj_matrix) <- paste0("N", 1:num_nodes)
     vsize <- 12   # short N-labels: keep current look
     lcex  <- 0.7
@@ -64,14 +74,6 @@ plot_bbni <- function(results, threshold = 0.5, node_names = NULL, true_network 
     colnames(adj_matrix) <- rownames(adj_matrix) <- node_names
     vsize <- 20   # real gene names (e.g. CDC20), bigger circle + smaller text so labels fit
     lcex  <- 0.6
-  }
-  # Validate node_names and true_network if provided
-  if (!is.null(node_names) && (!is.character(node_names) || length(node_names) != num_nodes)) {
-    stop(sprintf("'node_names' must be a character vector of length %d.", num_nodes), call. = FALSE)
-  }
-  if (!is.null(true_network) && (!is.matrix(true_network) ||
-                                 nrow(true_network) != num_nodes || ncol(true_network) != num_nodes)) {
-    stop(sprintf("'true_network' must be a square %d x %d matrix.", num_nodes, num_nodes), call. = FALSE)
   }
   # get functions for inferred edges
   inf_func_matrix <- matrix(0, num_nodes, num_nodes)
