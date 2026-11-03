@@ -2,25 +2,25 @@
 
 ## All functions
 
-- [`GenerateNetwork()`](https://shan-team.github.io/BBNI/reference/GenerateNetwork.md)
+- [`GenerateNetwork()`](https://anson-li8.github.io/BBNI/reference/GenerateNetwork.md)
   : Generate Initial Network Topology
-- [`GenerateSample()`](https://shan-team.github.io/BBNI/reference/GenerateSample.md)
+- [`GenerateSample()`](https://anson-li8.github.io/BBNI/reference/GenerateSample.md)
   : Simulate Boolean Network Observation Dataset
-- [`bbni_class`](https://shan-team.github.io/BBNI/reference/bbni_class.md)
+- [`bbni_class`](https://anson-li8.github.io/BBNI/reference/bbni_class.md)
   : BBNI MCMC Output Class
-- [`plot(`*`<bbni>`*`)`](https://shan-team.github.io/BBNI/reference/plot.bbni.md)
+- [`plot(`*`<bbni>`*`)`](https://anson-li8.github.io/BBNI/reference/plot.bbni.md)
   : Plot a BBNI MCMC Object
-- [`plot_bbni()`](https://shan-team.github.io/BBNI/reference/plot_bbni.md)
+- [`plot_bbni()`](https://anson-li8.github.io/BBNI/reference/plot_bbni.md)
   : Plot the Inferred Bayesian Boolean Network
-- [`plot_network()`](https://shan-team.github.io/BBNI/reference/plot_network.md)
+- [`plot_network()`](https://anson-li8.github.io/BBNI/reference/plot_network.md)
   : Plot a Single Boolean Network
-- [`plot_trace()`](https://shan-team.github.io/BBNI/reference/plot_trace.md)
+- [`plot_trace()`](https://anson-li8.github.io/BBNI/reference/plot_trace.md)
   : Plot MCMC Trace for BBNI
-- [`print(`*`<bbni>`*`)`](https://shan-team.github.io/BBNI/reference/print.bbni.md)
+- [`print(`*`<bbni>`*`)`](https://anson-li8.github.io/BBNI/reference/print.bbni.md)
   : Print a BBNI MCMC Object
-- [`run_bbni()`](https://shan-team.github.io/BBNI/reference/run_bbni.md)
+- [`run_bbni()`](https://anson-li8.github.io/BBNI/reference/run_bbni.md)
   : Execute Metropolis-within-Gibbs MCMC Sampler for Boolean Networks
-- [`summary(`*`<bbni>`*`)`](https://shan-team.github.io/BBNI/reference/summary.bbni.md)
+- [`summary(`*`<bbni>`*`)`](https://anson-li8.github.io/BBNI/reference/summary.bbni.md)
   : Posterior Summary of a BBNI MCMC Object
-- [`yeast_data`](https://shan-team.github.io/BBNI/reference/yeast_data.md)
+- [`yeast_data`](https://anson-li8.github.io/BBNI/reference/yeast_data.md)
   : Yeast Cell-Cycle Gene Expression Data

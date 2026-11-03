@@ -15,7 +15,7 @@ summary(object, threshold = 0.5, n_top = 5, ...)
 - object:
 
   A `bbni` object returned by
-  [`run_bbni()`](https://shan-team.github.io/BBNI/reference/run_bbni.md).
+  [`run_bbni()`](https://anson-li8.github.io/BBNI/reference/run_bbni.md).
 
 - threshold:
 

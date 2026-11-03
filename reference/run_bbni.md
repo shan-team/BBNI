@@ -101,7 +101,7 @@ is a classed `bbni` object, so
 [`summary()`](https://rdrr.io/r/base/summary.html), and
 [`plot()`](https://rdrr.io/r/graphics/plot.default.html) methods are
 available (see
-[`?bbni_class`](https://shan-team.github.io/BBNI/reference/bbni_class.md)).
+[`?bbni_class`](https://anson-li8.github.io/BBNI/reference/bbni_class.md)).
 
 ## Details
 
