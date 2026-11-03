@@ -4,6 +4,7 @@
 * Added robust validation to public interface function parameters
 * Added robust unit tests, reaching over 95% code coverage
 * Added documentation and examples for new S3 methods
+* Updated vignette to reflect S3 method interface
 
 # BBNI 0.2.2
 
