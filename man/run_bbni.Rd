@@ -40,6 +40,7 @@ run_bbni(
 }
 \value{
 A list containing the full trajectory of the MCMC chain. Specifically, \code{networks} (a list of sampled transition function matrices) and \code{log_posterior} (a numeric vector of log-posterior scores for each iteration). These represent samples drawn from the marginal posterior distribution \eqn{P(T,F|G)}{P(T,F|G)} used for Bayesian model averaging. Additionally, the \code{post_edge_prob} (matrix of marginal posterior edge probabilities) and \code{burn_in} ratio are returned in the list.
+The result is a classed \code{bbni} object, so \code{print()}, \code{summary()}, and \code{plot()} methods are available (see \code{?bbni_class}).
 }
 \description{
 Executes a Metropolis-within-Gibbs Markov chain Monte Carlo (MCMC) algorithm to sample

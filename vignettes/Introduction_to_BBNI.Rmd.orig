@@ -148,6 +148,20 @@ As of v0.2.2, the MCMC sampler has been substantially optimized relative to the 
 - `post_edge_prob`- matrix of marginal posterior edge probabilities calculated after discarding burn_in period
 - `burn_in`- the `burn_in` ratio returned back to user for posterior reference
 
+As of v0.2.3, the result is returned as a classed `bbni` object, so the familiar generic functions `print()`, `summary()`, and `plot()` work on it directly. The default print method gives a compact overview of the completed run:
+
+```{r s3-print}
+mcmc_results
+```
+
+`summary()` prints posterior edge statistics and invisibly returns them as a list, including the number of strong edges (`n_strong_edges`) and the highest-posterior edges as a data frame (`top_edges`) for downstream use:
+
+```{r s3-summary}
+summary(mcmc_results, threshold = 0.5, n_top = 5)
+```
+
+The `plot()` method draws the log-posterior trace plot by delegating to `plot_trace()`; it is used in the next section.
+
 ### Convergence: trace plot
 
 A trace plot of the log-posterior over MCMC updates evaluates chain behavior. Given that we know the specific ground-truth network, we can further compute the log-posterior of the true network via the package's internal `Error_LLH()` function and graph it as a reference baseline:
@@ -165,8 +179,8 @@ true_logpost_raw <- BBNI:::Error_LLH(
 # The log-posterior value is the last element of the first returned vector.
 true_logpost <- true_logpost_raw[[1]][length(true_logpost_raw[[1]])]
 
-# Draw base trace plot with package function
-plot_trace(mcmc_results)
+# Draw base trace plot with the S3 plot() method (delegates to plot_trace())
+plot(mcmc_results)
 
 # Add true-network reference value.
 abline(h = true_logpost, col = "firebrick", lty = 2, lwd = 2)
@@ -301,7 +315,7 @@ The original paper acknowledges that "12.82% of the links in the reference yeast
 
 This vignette demonstrates the core `BBNI` workflow on simulated data. From here:
 
-- See `?run_bbni`, `?GenerateNetwork`, and `?GenerateSample` for function-level documentation.
+- See `?run_bbni`, `?GenerateNetwork`, and `?GenerateSample` for function-level documentation, and `?bbni_class` for the S3 methods available on the result object.
 - The simulated example runs `r num_update` iterations on a 20-node network. Larger networks, noisier data, or higher-precision posterior summaries may require significantly more iterations.
 - For user-supplied expression data, format `GeneData` as a binary `num.node` x `SampleSize` matrix, as described above.
 - The current model assumes binary data, a directed acyclic graph, and maximum in-degree two. For real data, run multiple chains or sensitivity analysis when possible.
