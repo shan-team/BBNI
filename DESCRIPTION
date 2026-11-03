@@ -20,7 +20,9 @@ Language: en-US
 Roxygen: list(markdown = TRUE)
 Imports: 
     stats,
-    igraph
+    igraph,
+    graphics,
+    utils
 Suggests: 
     knitr,
     rmarkdown,
