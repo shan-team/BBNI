@@ -5,7 +5,7 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/han16/BBNI/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/han16/BBNI/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/shan-team/BBNI/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/shan-team/BBNI/actions/workflows/R-CMD-check.yaml)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/BBNI)](https://CRAN.R-project.org/package=BBNI)
 [![Codecov test

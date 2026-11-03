@@ -11,9 +11,9 @@ Implements a fully Bayesian Markov chain Monte Carlo (MCMC) approach for inferri
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://han16.github.io/BBNI/}
-  \item \url{https://github.com/han16/BBNI}
-  \item Report bugs at \url{https://github.com/han16/BBNI/issues}
+  \item \url{https://shan-team.github.io/BBNI/}
+  \item \url{https://github.com/shan-team/BBNI}
+  \item Report bugs at \url{https://github.com/shan-team/BBNI/issues}
 }
 
 }
