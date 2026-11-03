@@ -24,6 +24,7 @@
 #' `burn_in`, as designed in the original method paper.
 #'
 #' @return A list containing the full trajectory of the MCMC chain. Specifically, `networks` (a list of sampled transition function matrices) and `log_posterior` (a numeric vector of log-posterior scores for each iteration). These represent samples drawn from the marginal posterior distribution \eqn{P(T,F|G)}{P(T,F|G)} used for Bayesian model averaging. Additionally, the `post_edge_prob` (matrix of marginal posterior edge probabilities) and `burn_in` ratio are returned in the list.
+#' The result is a classed `bbni` object, so `print()`, `summary()`, and `plot()` methods are available (see `?bbni_class`).
 #'
 #' @examples
 #' # 1. Define network parameters
