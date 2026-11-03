@@ -1,6 +1,6 @@
 # BBNI MCMC Output Class
 
-[`run_bbni()`](https://han16.github.io/BBNI/reference/run_bbni.md)
+[`run_bbni()`](https://anson-li8.github.io/BBNI/reference/run_bbni.md)
 returns a list of class `bbni` containing the sampled path of the
 Metropolis-within-Gibbs chain. Classed objects have
 [`print()`](https://rdrr.io/r/base/print.html),
@@ -26,7 +26,7 @@ stored as attributes.
 
 ## See also
 
-[`run_bbni()`](https://han16.github.io/BBNI/reference/run_bbni.md),
-[`print.bbni()`](https://han16.github.io/BBNI/reference/print.bbni.md),
-[`summary.bbni()`](https://han16.github.io/BBNI/reference/summary.bbni.md),
-[`plot.bbni()`](https://han16.github.io/BBNI/reference/plot.bbni.md)
+[`run_bbni()`](https://anson-li8.github.io/BBNI/reference/run_bbni.md),
+[`print.bbni()`](https://anson-li8.github.io/BBNI/reference/print.bbni.md),
+[`summary.bbni()`](https://anson-li8.github.io/BBNI/reference/summary.bbni.md),
+[`plot.bbni()`](https://anson-li8.github.io/BBNI/reference/plot.bbni.md)
