@@ -8,6 +8,8 @@
 [![R-CMD-check](https://github.com/anson-li8/BBNI/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/anson-li8/BBNI/actions/workflows/R-CMD-check.yaml)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/BBNI)](https://CRAN.R-project.org/package=BBNI)
+[![Codecov test
+coverage](https://codecov.io/gh/anson-li8/BBNI/graph/badge.svg)](https://app.codecov.io/gh/anson-li8/BBNI)
 <!-- badges: end -->
 
 BBNI (<u>B</u>ayesian <u>B</u>oolean <u>N</u>etwork <u>I</u>nference) is

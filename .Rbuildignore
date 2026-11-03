@@ -9,3 +9,4 @@
 ^NOTES\.md$
 ^vignettes/Introduction_to_BBNI\.Rmd\.orig$
 ^\.lintr$
+^codecov\.yml$
