@@ -38,7 +38,7 @@ The development version can be installed from GitHub:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("han16/BBNI")
+devtools::install_github("shan-team/BBNI")
 ```
 
 ## Performance
@@ -81,7 +81,7 @@ dummy_data
 
 For a complete demonstration running the MCMC sampler and evaluating
 final convergence and overall network recovery, see the [Introduction to
-BBNI](https://han16.github.io/BBNI/articles/Introduction_to_BBNI.html)
+BBNI](https://shan-team.github.io/BBNI/articles/Introduction_to_BBNI.html)
 vignette.
 
 ## Citation
