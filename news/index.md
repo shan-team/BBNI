@@ -2,6 +2,8 @@
 
 ## BBNI 0.2.3
 
+CRAN release: 2026-11-03
+
 - Added S3 methods (print, summary, plot) for a bbni class object as
   output
 - Added robust validation to public interface function parameters
@@ -67,7 +69,7 @@ CRAN release: 2026-07-15
 - Refactored legacy Bayesian Boolean Network Inference code into a
   modular, documented R package.
 - Added
-  [`run_bbni()`](https://anson-li8.github.io/BBNI/reference/run_bbni.md)
+  [`run_bbni()`](https://shan-team.github.io/BBNI/reference/run_bbni.md)
   as the primary user-facing function.
 - Added a vignette demonstrating network recovery from simulated data.
 - Added unit tests for core network-validity and likelihood functions.

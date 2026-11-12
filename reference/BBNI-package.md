@@ -14,11 +14,11 @@ rather than a single point estimate. Method described in Han et al.
 
 Useful links:
 
-- <https://anson-li8.github.io/BBNI/>
+- <https://shan-team.github.io/BBNI/>
 
-- <https://github.com/anson-li8/BBNI>
+- <https://github.com/shan-team/BBNI>
 
-- Report bugs at <https://github.com/anson-li8/BBNI/issues>
+- Report bugs at <https://github.com/shan-team/BBNI/issues>
 
 ## Author
 
